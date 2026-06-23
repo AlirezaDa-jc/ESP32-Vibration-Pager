@@ -7,8 +7,8 @@ A wireless master-slave paging system built on **ESP32** microcontrollers with *
 ## System Overview
 
 ```
-┌─────────────────────┐          nRF24L01 RF          ┌─────────────────────┐
-│     MASTER UNIT     │  ───── channel 90, 1Mbps ───▶  │     SLAVE UNIT      │
+┌─────────────────────┐          nRF24L01 RF            ┌─────────────────────┐
+│     MASTER UNIT     │  ───── channel 90, 1Mbps ───>   │     SLAVE UNIT      │
 │                     │       AES-256 ECB encrypted     │                     │
 │  4x3 Keypad         │                                 │  WS2812 LED strip   │
 │  TM1637 Display     │                                 │  Vibration motor    │
@@ -99,10 +99,11 @@ Adafruit NeoPixel     — WS2812 LED strip
 ```
 ├── master/
 │   └── master.ino        # Master unit firmware
+|   ├── Cipher.h          # AES-128 helper class (header)
+│   └── Cipher.cpp        # AES-128 helper class (implementation)
 ├── slave/
-│   └── Slave.ino         # Slave unit firmware
-├── Cipher/
-│   ├── Cipher.h          # AES-128 helper class (header)
+│   ├── Slave.ino         # Slave unit firmware
+|   ├── Cipher.h          # AES-128 helper class (header)
 │   └── Cipher.cpp        # AES-128 helper class (implementation)
 └── README.md
 ```
@@ -122,4 +123,3 @@ Adafruit NeoPixel     — WS2812 LED strip
 - RF channel is set to `90`, data rate `1Mbps`, PA level `MAX` — adjust for your RF environment
 - The AES key is hardcoded for simplicity; in production, use a key exchange mechanism
 - Slave node address is `01` (octal) — change `this_node` per device for a multi-slave deployment
-- `CIPHER_DEBUG` is defined in `Cipher.h` — comment it out to suppress Serial debug output in production
